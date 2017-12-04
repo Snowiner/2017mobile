@@ -64,7 +64,31 @@ export class ParkDetailsPage {
   }
 
   manage(){
-    this.navCtrl.push(ParkAuthsPage,{id:this.key});
+    var user = firebase.auth().currentUser;
+    var db = firebase.database().ref('/parks/'+this.key+'/managers');
+    var navCtrl = this.navCtrl;
+    var key = this.key;
+    db.orderByChild('key')
+    .equalTo(user.uid)
+    .once('value', function(snapshot){
+      if(snapshot.exists())
+      {
+        navCtrl.push(ParkAuthsPage,{id:key});
+      }
+      else
+      {
+        window.alert('unauthorized access');
+      }
+    })
+
+    
   }
+
+  ifAuth(){
+    var user = firebase.auth().currentUser;
+    const valid = firebase.database().ref(`/parks/`+this.key+'/manager/');
+    
+  }
+
 
 }

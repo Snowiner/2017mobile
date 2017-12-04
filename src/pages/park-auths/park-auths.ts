@@ -17,6 +17,7 @@ import { AlertController } from 'ionic-angular';
 })
 export class ParkAuthsPage {
   id;
+  user;
 
   //searching
   searchQuery: string = '';
@@ -24,9 +25,10 @@ export class ParkAuthsPage {
   loadedPeople: Array<any>;
   peopleRef;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl:AlertController, private af:AngularFireDatabase) {
     this.id = navParams.get('id');
     this.peopleRef = firebase.database().ref('/userProfile');
+    this.user = firebase.auth().currentUser;
   }
 
   ionViewDidLoad() {
@@ -45,7 +47,9 @@ export class ParkAuthsPage {
 
   authSelect(thePerson){
     let db = firebase.database().ref('/parks/').child(this.id);
-    
+    var id = this.id;
+    window.alert(thePerson.key);
+
     let alert = this.alertCtrl.create({
       title:'권한 부여하기',
       subTitle:thePerson.email,
@@ -54,13 +58,13 @@ export class ParkAuthsPage {
         {
           text:'매니저',
           handler:()=>{
-            db.child('managers').push(thePerson);
-          }
+            this.addUser(thePerson,'managers');
+            }
         },
         {
           text:'현장관리자',
           handler:()=>{
-            db.child('checkers').push(thePerson);
+            this.addUser(thePerson,'checkers');
           }
         },
         {
@@ -106,5 +110,28 @@ export class ParkAuthsPage {
          return record.people;
     }
    }
+
+   addUser(thePerson, position){
+    let id = this.id;
+    var ref = firebase.database().ref(`/parks/${id}/${position}/`);
+    
+    window.alert("inside addUser");
+
+    ref.orderByChild('key')
+    .equalTo(thePerson.key)
+    .once('value', function(snapshot){
+          if(snapshot.exists())
+          {
+            window.alert("user exists");
+            return true;
+          }
+          else
+          {
+            ref.push(thePerson);
+            window.alert("user added");
+            return false;
+          }
+    });
+  }
 
 }

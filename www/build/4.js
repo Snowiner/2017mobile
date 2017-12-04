@@ -107,11 +107,28 @@ var ParkDetailsPage = (function () {
         //  });
     };
     ParkDetailsPage.prototype.manage = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__park_auths_park_auths__["a" /* ParkAuthsPage */], { id: this.key });
+        var user = __WEBPACK_IMPORTED_MODULE_4_firebase__["auth"]().currentUser;
+        var db = __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('/parks/' + this.key + '/managers');
+        var navCtrl = this.navCtrl;
+        var key = this.key;
+        db.orderByChild('key')
+            .equalTo(user.uid)
+            .once('value', function (snapshot) {
+            if (snapshot.exists()) {
+                navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__park_auths_park_auths__["a" /* ParkAuthsPage */], { id: key });
+            }
+            else {
+                window.alert('unauthorized access');
+            }
+        });
+    };
+    ParkDetailsPage.prototype.ifAuth = function () {
+        var user = __WEBPACK_IMPORTED_MODULE_4_firebase__["auth"]().currentUser;
+        var valid = __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref("/parks/" + this.key + '/manager/');
     };
     ParkDetailsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-park-details',template:/*ion-inline-start:"D:\dev\mobileProject\dev2\1204\src\pages\park-details\park-details.html"*/`<!--\n\n  Generated template for the ParkDetailsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  \n\n    <ion-navbar color="primary">\n\n      <ion-title>Parking Info</ion-title>\n\n\n\n    </ion-navbar>\n\n    <ion-buttons end>\n\n      <div>\n\n        <button ion-button icon-left (click) = "manage()"> 주차장 권한 </button>\n\n      </div>\n\n  </ion-buttons>\n\n  </ion-header>\n\n  \n\n  \n\n  <ion-content>\n\n    <h1 padding>{{check.place}}</h1>\n\n    \n\n    <ion-list>\n\n      <ion-item *ngFor = "let toggles of tog | async">\n\n        <ion-label>{{toggles.carnum}}</ion-label>\n\n        <ion-toggle value="foo" checked={{toggles.toggle}} (ionChange) = "toggleButton(toggles)"></ion-toggle>\n\n      </ion-item>\n\n    </ion-list>\n\n  </ion-content>`/*ion-inline-end:"D:\dev\mobileProject\dev2\1204\src\pages\park-details\park-details.html"*/,
+            selector: 'page-park-details',template:/*ion-inline-start:"D:\dev\mobileProject\dev2\1204\src\pages\park-details\park-details.html"*/`<!--\n\n  Generated template for the ParkDetailsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  \n\n    <ion-navbar color="primary">\n\n      <ion-title>Parking Info</ion-title>\n\n\n\n    </ion-navbar>\n\n    <ion-buttons end>\n\n      <!-- <div *ngIf="ifAuth()"> -->\n\n        <button ion-button icon-left (click) = "manage()"> 주차장 권한 </button>\n\n      <!-- </div> -->\n\n  </ion-buttons>\n\n  </ion-header>\n\n  \n\n  \n\n  <ion-content>\n\n    <h1 padding>{{check.place}}</h1>\n\n    \n\n    <ion-list>\n\n      <ion-item *ngFor = "let toggles of tog | async">\n\n        <ion-label>{{toggles.carnum}}</ion-label>\n\n        <ion-toggle value="foo" checked={{toggles.toggle}} (ionChange) = "toggleButton(toggles)"></ion-toggle>\n\n      </ion-item>\n\n    </ion-list>\n\n  </ion-content>`/*ion-inline-end:"D:\dev\mobileProject\dev2\1204\src\pages\park-details\park-details.html"*/,
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_dialogs__["a" /* Dialogs */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_dialogs__["a" /* Dialogs */]) === "function" && _d || Object])
     ], ParkDetailsPage);

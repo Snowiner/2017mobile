@@ -391,6 +391,7 @@ var AuthProvider = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(116);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -404,6 +405,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the ParkAuthsPage page.
  *
@@ -411,15 +413,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var ParkAuthsPage = (function () {
-    function ParkAuthsPage(navCtrl, navParams, alertCtrl) {
+    function ParkAuthsPage(navCtrl, navParams, alertCtrl, af) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.alertCtrl = alertCtrl;
+        this.af = af;
         //searching
         this.searchQuery = '';
         this.people = [];
         this.id = navParams.get('id');
         this.peopleRef = __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref('/userProfile');
+        this.user = __WEBPACK_IMPORTED_MODULE_2_firebase__["auth"]().currentUser;
     }
     ParkAuthsPage.prototype.ionViewDidLoad = function () {
         var _this = this;
@@ -436,7 +440,10 @@ var ParkAuthsPage = (function () {
         });
     };
     ParkAuthsPage.prototype.authSelect = function (thePerson) {
+        var _this = this;
         var db = __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref('/parks/').child(this.id);
+        var id = this.id;
+        window.alert(thePerson.key);
         var alert = this.alertCtrl.create({
             title: '권한 부여하기',
             subTitle: thePerson.email,
@@ -444,13 +451,13 @@ var ParkAuthsPage = (function () {
                 {
                     text: '매니저',
                     handler: function () {
-                        db.child('managers').push(thePerson);
+                        _this.addUser(thePerson, 'managers');
                     }
                 },
                 {
                     text: '현장관리자',
                     handler: function () {
-                        db.child('checkers').push(thePerson);
+                        _this.addUser(thePerson, 'checkers');
                     }
                 },
                 {
@@ -494,13 +501,32 @@ var ParkAuthsPage = (function () {
             return record.people;
         }
     };
+    ParkAuthsPage.prototype.addUser = function (thePerson, position) {
+        var id = this.id;
+        var ref = __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref("/parks/" + id + "/" + position + "/");
+        window.alert("inside addUser");
+        ref.orderByChild('key')
+            .equalTo(thePerson.key)
+            .once('value', function (snapshot) {
+            if (snapshot.exists()) {
+                window.alert("user exists");
+                return true;
+            }
+            else {
+                ref.push(thePerson);
+                window.alert("user added");
+                return false;
+            }
+        });
+    };
     ParkAuthsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-park-auths',template:/*ion-inline-start:"D:\dev\mobileProject\dev2\1204\src\pages\park-auths\park-auths.html"*/`<!--\n\n  Generated template for the ParkAuthsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar color = "primary">\n\n    <ion-title>park-auths</ion-title>\n\n    \n\n  </ion-navbar>\n\n\n\n  <ion-toolbar>\n\n    <ion-searchbar [(ngModel)]="searchQuery"\n\n        (ionInput)="getUsers($event)"\n\n        (ionClear)="resetList($event)">\n\n    </ion-searchbar>\n\n  </ion-toolbar>\n\n  \n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n<ion-list [virtualScroll] = "people" [headerFn]="customHeaderFn">\n\n  <ion-item-divider *virtualHeader="let header">\n\n      {{header}}\n\n    </ion-item-divider>\n\n\n\n<ion-item *virtualItem = "let person" (click) = "authSelect(person)" detail-push>\n\n\n\n    <h3>{{person.email}}</h3>\n\n\n\n  </ion-item>\n\n</ion-list>\n\n\n\n</ion-content>\n\n`/*ion-inline-end:"D:\dev\mobileProject\dev2\1204\src\pages\park-auths\park-auths.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _d || Object])
     ], ParkAuthsPage);
     return ParkAuthsPage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=park-auths.js.map
