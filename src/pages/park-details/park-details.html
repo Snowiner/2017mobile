@@ -8,8 +8,13 @@
 
   <ion-navbar color="primary">
     <ion-title>Parking Info</ion-title>
-  </ion-navbar>
 
+    <ion-buttons end>
+      <div>
+        <button ion-button icon-left (click) = "manage()"> 주차장 권한 </button>
+      </div>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 
@@ -19,7 +24,7 @@
   <ion-list>
     <ion-item *ngFor = "let details of detail">
       <ion-label>{{details.carnum}}</ion-label>
-      <ion-toggle value="foo" checked={{details.toggle}} (ionChange) = "toggleButton(details)"></ion-toggle>
+      <ion-toggle value="foo" checked={{details.toggle}} (ionChange) = "toggleButton(details.carnum, details.toggle)"></ion-toggle>
     </ion-item>
   </ion-list>
 </ion-content>

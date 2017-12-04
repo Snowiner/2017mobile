@@ -16,6 +16,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Dialogs } from '@ionic-native/dialogs';
 import { ParkRegisterPage } from '../pages/park-register/park-register';
+import { ParkAuthsPage } from '../pages/park-auths/park-auths';
 
 
 export const firebaseConfig =
@@ -27,14 +28,26 @@ storageBucket: "",
 messagingSenderId: "649356034318"
 };
 
-firebase.initializeApp({
-  apiKey: "AIzaSyCSUkWpvARbHh9GkEqmSnorlFJekRIRq8E",
-  authDomain: "fir-test-a0388.firebaseapp.com",
-  databaseURL: "https://fir-test-a0388.firebaseio.com",
-  projectId: "fir-test-a0388",
-  storageBucket: "",
-  messagingSenderId: "649356034318"
-  });
+export const firebaseConfig2 = 
+{
+  apiKey: "AIzaSyAP0jNE9k-a38NyMtLDEISd4X9DXIMviXM",
+  authDomain: "mobiletest-c2f48.firebaseapp.com",
+  databaseURL: "https://mobiletest-c2f48.firebaseio.com",
+  projectId: "mobiletest-c2f48",
+  storageBucket: "mobiletest-c2f48.appspot.com",
+  messagingSenderId: "933346400019"
+};
+
+// firebase.initializeApp({
+//   apiKey: "AIzaSyCSUkWpvARbHh9GkEqmSnorlFJekRIRq8E",
+//   authDomain: "fir-test-a0388.firebaseapp.com",
+//   databaseURL: "https://fir-test-a0388.firebaseio.com",
+//   projectId: "fir-test-a0388",
+//   storageBucket: "",
+//   messagingSenderId: "649356034318"
+//   });
+
+firebase.initializeApp(firebaseConfig2);
 
 class CameraMock extends Camera {
   getPicture(options){
@@ -54,7 +67,8 @@ class CameraMock extends Camera {
     MyApp,
     HomePage,
     ParkListPage,
-    ParkRegisterPage
+    ParkRegisterPage,
+    ParkAuthsPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +82,8 @@ class CameraMock extends Camera {
     MyApp,
     HomePage,
     ParkListPage,
-    ParkRegisterPage
+    ParkRegisterPage,
+    ParkAuthsPage
   ],
   providers: [
     StatusBar,
