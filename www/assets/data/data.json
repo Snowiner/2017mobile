@@ -1,0 +1,20 @@
+[
+    {
+        "id": 0,
+        "name": "Kyeongbok-palace",
+        "image": "acadia.jpg",
+        "loc": "Seoul"
+   },
+    {
+        "id": 1,
+        "name": "Haeundae",
+        "image": "americansamoa.jpg",
+        "loc": "Busan"
+      },
+    {
+        "id": 2,
+        "name": "Yeongildae",
+        "image": "arches.jpg",
+        "loc": "Pohang"
+       }
+]
