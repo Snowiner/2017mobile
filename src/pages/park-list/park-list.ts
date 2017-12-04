@@ -21,13 +21,21 @@ export class ParkListPage {
   do: Array<any> =[];
   loadedDo: Array<any>;
   doRef;
+  ifMaster: boolean;
+  check: any[] = [];
   constructor(public navCtrl: NavController) {
     /*
     parkData.getParks().then(theResult => {
       this.parks = theResult;
     })
     */
+
+
+
+  this.ifAuth();
   this.doRef = firebase.database().ref('/parks');
+   
+
    // this.parks =af.list('/parks');
    }
 
@@ -52,6 +60,7 @@ export class ParkListPage {
     this.do = tmp;
     this.loadedDo = tmp;
     });
+
   }
   
   initializeParks(){
@@ -92,4 +101,57 @@ export class ParkListPage {
           return record.do;
      }
     }
-}
+
+    ifAuth(){
+      var user = firebase.auth().currentUser;
+      var valid = firebase.database().ref(`/master/`);
+      var check  = this.check;
+
+      valid.orderByChild('key')
+      .equalTo(user.uid)
+      .once('value',
+        function(snapshot)
+        {
+          if(snapshot.exists())
+          {
+            check.push(true);
+          }
+          else{
+            check.push(false);
+          }
+          window.alert('1');
+        });
+        this.check = check;
+        }
+
+        sample2(){
+          if(this.check)
+          {
+            this.sample(this.check);
+            return true;
+          }
+          else{
+            this.sample(this.check);
+            return false;
+          }
+        }
+
+        sample(check)
+        {
+          if(check[0])
+          {
+            this.ifMaster = true;
+            window.alert('2');
+            return true;
+          }
+          else
+          {
+            this.ifMaster = false;
+            return false;
+          }
+        }
+      
+    }
+
+    
+

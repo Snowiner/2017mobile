@@ -120,6 +120,7 @@ export class ParkAuthsPage {
     .once('value', function(snapshot){
           if(snapshot.exists())
           {
+            window.alert("이미 권한이 있는 사용자입니다.");
             return true;
           }
           else

@@ -31,14 +31,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 */
 var ParkListPage = (function () {
     function ParkListPage(navCtrl) {
-        this.navCtrl = navCtrl;
-        this.searchQuery = '';
-        this.do = [];
         /*
         parkData.getParks().then(theResult => {
           this.parks = theResult;
         })
         */
+        this.navCtrl = navCtrl;
+        this.searchQuery = '';
+        this.do = [];
+        this.check = [];
+        this.ifAuth();
         this.doRef = __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref('/parks');
         // this.parks =af.list('/parks');
     }
@@ -100,13 +102,52 @@ var ParkListPage = (function () {
             return record.do;
         }
     };
+    ParkListPage.prototype.ifAuth = function () {
+        var user = __WEBPACK_IMPORTED_MODULE_2_firebase__["auth"]().currentUser;
+        var valid = __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref("/master/");
+        var check = this.check;
+        valid.orderByChild('key')
+            .equalTo(user.uid)
+            .once('value', function (snapshot) {
+            if (snapshot.exists()) {
+                check.push(true);
+            }
+            else {
+                check.push(false);
+            }
+            window.alert('1');
+        });
+        this.check = check;
+    };
+    ParkListPage.prototype.sample2 = function () {
+        if (this.check) {
+            this.sample(this.check);
+            return true;
+        }
+        else {
+            this.sample(this.check);
+            return false;
+        }
+    };
+    ParkListPage.prototype.sample = function (check) {
+        if (check[0]) {
+            this.ifMaster = true;
+            window.alert('2');
+            return true;
+        }
+        else {
+            this.ifMaster = false;
+            return false;
+        }
+    };
     ParkListPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-park-list',template:/*ion-inline-start:"D:\dev\mobileProject\dev2\1204\src\pages\park-list\park-list.html"*/`<ion-header>\n  \n    <ion-navbar color ="primary">\n      <ion-title>Park HERE</ion-title>\n      <ion-buttons end>\n          <button ion-button icon-left (click) = \n          "addPark()">주차장추가 </button>\n        </ion-buttons>\n\n    </ion-navbar>\n  \n    <ion-toolbar>\n      <ion-searchbar [(ngModel)]="searchQuery"\n          (ionInput)="getParks($event)"\n          (ionClear)="resetList($event)">\n      </ion-searchbar>\n    </ion-toolbar>\n  </ion-header>\n  \n  \n  <ion-content>    \n    <ion-list [virtualScroll] = "do" [headerFn]="customHeaderFn">\n        <ion-item-divider *virtualHeader="let header">\n            {{header}}\n          </ion-item-divider>\n\n      <ion-item *virtualItem = "let dos" (click) = "goParkDetails(dos)" detail-push>\n \n          <h3>{{dos.place}}</h3>\n          <p>{{dos.si}}, {{dos.do}}</p>\n \n        </ion-item>\n    </ion-list>\n  </ion-content>\n  \n\n`/*ion-inline-end:"D:\dev\mobileProject\dev2\1204\src\pages\park-list\park-list.html"*/
+            selector: 'page-park-list',template:/*ion-inline-start:"D:\dev\mobileProject\dev2\1204\src\pages\park-list\park-list.html"*/`<ion-header>\n  \n    <ion-navbar color ="primary">\n      <ion-title>Park HERE</ion-title>\n     <ion-buttons end *ngIf="check[0]">\n          <button ion-button icon-left (click) = \n          "addPark()">주차장추가 </button>\n        </ion-buttons>\n   \n    </ion-navbar>\n  \n    <ion-toolbar>\n      <ion-searchbar [(ngModel)]="searchQuery"\n          (ionInput)="getParks($event)"\n          (ionClear)="resetList($event)">\n      </ion-searchbar>\n    </ion-toolbar>\n  </ion-header>\n  \n  \n  <ion-content>    \n    <ion-list [virtualScroll] = "do" [headerFn]="customHeaderFn">\n        <ion-item-divider *virtualHeader="let header">\n            {{header}}\n          </ion-item-divider>\n\n      <ion-item *virtualItem = "let dos" (click) = "goParkDetails(dos)" detail-push>\n \n          <h3>{{dos.place}}</h3>\n          <p>{{dos.si}}, {{dos.do}}</p>\n \n        </ion-item>\n    </ion-list>\n  </ion-content>\n  \n\n`/*ion-inline-end:"D:\dev\mobileProject\dev2\1204\src\pages\park-list\park-list.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object])
     ], ParkListPage);
     return ParkListPage;
+    var _a;
 }());
 
 //# sourceMappingURL=park-list.js.map
@@ -229,10 +270,11 @@ var ParkRegisterPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-park-register',template:/*ion-inline-start:"D:\dev\mobileProject\dev2\1204\src\pages\park-register\park-register.html"*/`<ion-header>\n    <ion-navbar>\n      <ion-title>\n        신규 주차장 등록\n      </ion-title>\n    </ion-navbar>\n  </ion-header>\n  <ion-content padding id="page1">\n    <form id="page1-form1">\n      <div id="page1-markdown6" class="show-list-numbers-and-dots">\n        <pre>\n          <code>\n            **유의사항**\n          </code>\n        </pre>\n        <p style="color:#000000;">\n          1.주차장 위치명은 &#39;국토정보공사&#39;를 기준으로 기입하시오\n        </p>\n        <p style="color:#000000;">\n          2.필요 Section에만 (최대) 차량 수를 기입 하시오\n        </p>\n        <p style="color:#000000;">\n          ex) A,B,C 섹션만 등록할 경우, D,E섹션은 공백으로 할 것\n        </p>\n      </div>\n  \n      <ion-item>\n        <ion-label>\n          지역선택\n        </ion-label>\n        <ion-select [(ngModel)]="doo" name="doo" type="text">\n          <!-- 값이름 : doo -->\n          <ion-option value="경기도">경기도</ion-option>\n          <ion-option value="강원도">강원도</ion-option>\n          <ion-option value="서울">서울</ion-option>\n          <ion-option value="전라도">전라도</ion-option>\n          <ion-option value="경상도">경상도</ion-option>\n          <ion-option value="충청도">충청도</ion-option>\n          <ion-option value="제주도">제주도</ion-option>\n       </ion-select>\n        <!-- 원래 바로위 select 와 연계되어서 작동해야하나, 아직 해결을 못하였다.\n        ex) 위 select 에서 \'경상도\'선택시, 아래 select 에서는 \'포항시\'만 나오게끔 해야함. -->\n        <ion-select [(ngModel)]="si" name="si" type="text">\n          <!--값이름 : si  -->\n          <ion-option value="광주광역시">광주시</ion-option>\n          <ion-option value="대전광역시">대전시</ion-option>\n          <ion-option value="강남구">강남구</ion-option>\n          <ion-option value="춘천시">춘천시</ion-option>\n          <ion-option value="용인시">용인시</ion-option>\n          <ion-option value="포항시">포항시</ion-option>\n        </ion-select>\n  \n      </ion-item>\n      <ion-item id="page1-input3">\n        <ion-label>\n          주차장 위치\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="place" name="place"></ion-input>\n      </ion-item>\n      <ion-item id="page1-input4">\n        <ion-label>\n          주차장 면적\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="wide" name="wide"></ion-input>\n      </ion-item>\n    </form>\n  \n  \n  \n    <div id="page1-markdown1" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        A Section\n      </p>\n    </div>\n    <form id="page1-form10">\n      <ion-item id="page1-input13">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="a" name="a"></ion-input>\n      </ion-item>\n    </form>\n    <div id="page1-markdown2" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        B Section\n      </p>\n    </div>\n    <form id="page1-form9">\n      <ion-item id="page1-input14">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="b" name="b"></ion-input>\n      </ion-item>\n    </form>\n    <div id="page1-markdown3" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        C Section\n      </p>\n    </div>\n    <form id="page1-form11">\n      <ion-item id="page1-input18">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="c" name="c"></ion-input>\n      </ion-item>\n    </form>\n    <div id="page1-markdown4" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        D Section\n      </p>\n    </div>\n    <form id="page1-form13">\n      <ion-item id="page1-input15">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="d" name="d"></ion-input>\n      </ion-item>\n    </form>\n    <form id="page1-form14">\n      <div id="page1-markdown5" class="show-list-numbers-and-dots">\n        <p style="color:#000000;">\n          E Section\n        </p>\n      </div>\n      <ion-item id="page1-input16">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="e" name="e"></ion-input>\n      </ion-item>\n      <button id="page1-button1" ion-button color="balanced" block (click)="return2enroll(doo,si,place,wide,a,b,c,d,e)">\n        등록\n      </button>\n  \n    </form>\n  </ion-content>`/*ion-inline-end:"D:\dev\mobileProject\dev2\1204\src\pages\park-register\park-register.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
     ], ParkRegisterPage);
     return ParkRegisterPage;
-    var ParkRegisterPage_1, _a, _b, _c, _d;
+    var ParkRegisterPage_1;
 }());
 
 //# sourceMappingURL=park-register.js.map
@@ -442,7 +484,6 @@ var ParkAuthsPage = (function () {
         var _this = this;
         var db = __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref('/parks/').child(this.id);
         var id = this.id;
-        window.alert(thePerson.key);
         var alert = this.alertCtrl.create({
             title: '권한 부여하기',
             subTitle: thePerson.email,
@@ -503,17 +544,15 @@ var ParkAuthsPage = (function () {
     ParkAuthsPage.prototype.addUser = function (thePerson, position) {
         var id = this.id;
         var ref = __WEBPACK_IMPORTED_MODULE_2_firebase__["database"]().ref("/parks/" + id + "/" + position + "/");
-        window.alert("inside addUser");
         ref.orderByChild('key')
             .equalTo(thePerson.key)
             .once('value', function (snapshot) {
             if (snapshot.exists()) {
-                window.alert("user exists");
+                window.alert("이미 권한이 있는 사용자입니다.");
                 return true;
             }
             else {
                 ref.push(thePerson);
-                window.alert("user added");
                 return false;
             }
         });

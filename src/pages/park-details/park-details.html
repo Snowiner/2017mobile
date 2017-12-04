@@ -24,11 +24,13 @@
     <h1 padding>{{check.place}}</h1>
     
     <ion-list >
-      <ion-item *ngFor = "let toggles of tog | async">
-        <ion-label *ngIf="toggles.toggle || checker">{{toggles.carnum}}</ion-label>
+      <div *ngFor = "let toggles of tog | async">
+      <ion-item *ngIf="toggles.toggle || checker">
+        <ion-label>{{toggles.carnum}}</ion-label>
         <ion-toggle *ngIf="checker" value="foo" checked={{toggles.toggle}} (ionChange) = "toggleButton(toggles)"></ion-toggle>
         
       </ion-item>
+    </div>
     </ion-list>
     <!-- <ion-list>
       <ion-item *ngFor = "let toggles of tog | async">
