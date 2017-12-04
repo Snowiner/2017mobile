@@ -48,7 +48,6 @@ export class ParkAuthsPage {
   authSelect(thePerson){
     let db = firebase.database().ref('/parks/').child(this.id);
     var id = this.id;
-    window.alert(thePerson.key);
 
     let alert = this.alertCtrl.create({
       title:'권한 부여하기',
@@ -115,20 +114,17 @@ export class ParkAuthsPage {
     let id = this.id;
     var ref = firebase.database().ref(`/parks/${id}/${position}/`);
     
-    window.alert("inside addUser");
 
     ref.orderByChild('key')
     .equalTo(thePerson.key)
     .once('value', function(snapshot){
           if(snapshot.exists())
           {
-            window.alert("user exists");
             return true;
           }
           else
           {
             ref.push(thePerson);
-            window.alert("user added");
             return false;
           }
     });

@@ -9,22 +9,32 @@
     <ion-navbar color="primary">
       <ion-title>Parking Info</ion-title>
 
+      <ion-buttons end>
+        <div *ngIf="auth">
+          <button ion-button icon-left (click) = "manage()"> 주차장 권한 </button>
+        </div>
+      </ion-buttons>
+
     </ion-navbar>
-    <ion-buttons end>
-      <!-- <div *ngIf="ifAuth()"> -->
-        <button ion-button icon-left (click) = "manage()"> 주차장 권한 </button>
-      <!-- </div> -->
-  </ion-buttons>
+    
   </ion-header>
   
   
   <ion-content>
     <h1 padding>{{check.place}}</h1>
     
-    <ion-list>
+    <ion-list >
       <ion-item *ngFor = "let toggles of tog | async">
-        <ion-label>{{toggles.carnum}}</ion-label>
-        <ion-toggle value="foo" checked={{toggles.toggle}} (ionChange) = "toggleButton(toggles)"></ion-toggle>
+        <ion-label *ngIf="toggles.toggle || checker">{{toggles.carnum}}</ion-label>
+        <ion-toggle *ngIf="checker" value="foo" checked={{toggles.toggle}} (ionChange) = "toggleButton(toggles)"></ion-toggle>
+        
       </ion-item>
     </ion-list>
+    <!-- <ion-list>
+      <ion-item *ngFor = "let toggles of tog | async">
+        <ion-label>{{toggles.carnum}}</ion-label>
+         
+      </ion-item>
+    </ion-list> -->
+
   </ion-content>

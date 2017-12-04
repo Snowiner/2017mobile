@@ -1,6 +1,6 @@
 webpackJsonp([10],{
 
-/***/ 114:
+/***/ 115:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9,7 +9,7 @@ webpackJsonp([10],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__park_register_park_register__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__park_register_park_register__ = __webpack_require__(116);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -113,15 +113,15 @@ var ParkListPage = (function () {
 
 /***/ }),
 
-/***/ 115:
+/***/ 116:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ParkRegisterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__park_list_park_list__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__park_list_park_list__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -155,19 +155,19 @@ var ParkRegisterPage = (function () {
     ParkRegisterPage.prototype.return2enroll = function (doo, si, place, wide, a, b, c, d, e) {
         var _this = this;
         for (var i = 0; i < a; i++) {
-            this.a_arr[i] = { carnum: 'A' + i, toggle: true };
+            this.a_arr[i] = { carnum: 'A' + i, toggle: true, id: i };
         }
         for (var i = 0; i < b; i++) {
-            this.a_arr[+a + +i] = { carnum: 'B' + i, toggle: true };
+            this.a_arr[+a + +i] = { carnum: 'B' + i, toggle: true, id: +a + +i };
         }
         for (var i = 0; i < c; i++) {
-            this.a_arr[+a + +b + +i] = { carnum: 'C' + i, toggle: true };
+            this.a_arr[+a + +b + +i] = { carnum: 'C' + i, toggle: true, id: +a + +b + +i };
         }
         for (var i = 0; i < d; i++) {
-            this.a_arr[+a + +b + +c + +i] = { carnum: 'D' + i, toggle: true };
+            this.a_arr[+a + +b + +c + +i] = { carnum: 'D' + i, toggle: true, id: +a + +b + +c + +i };
         }
         for (var i = 0; i < e; i++) {
-            this.a_arr[+a + +b + +c + +d + +i] = { carnum: 'E' + i, toggle: true };
+            this.a_arr[+a + +b + +c + +d + +i] = { carnum: 'E' + i, toggle: true, id: +a + +b + +c + +d + +i };
         }
         ///////////////////////////////////////////////////////////////////
         var alert = this.alertCtrl.create({
@@ -201,8 +201,8 @@ var ParkRegisterPage = (function () {
                           );
               */
                         var user = __WEBPACK_IMPORTED_MODULE_4_firebase__["auth"]().currentUser;
-                        _this.managers.push({ id: user.uid, email: user.email });
-                        _this.checkers.push({ id: user.uid, email: user.email });
+                        _this.managers.push({ key: user.uid, email: user.email });
+                        _this.checkers.push({ key: user.uid, email: user.email });
                         _this.parks.push({ doo: doo, si: si, place: place, wide: wide, detail: _this.a_arr, managers: _this.managers, checkers: _this.checkers });
                         //기존 location 을 그냥 doo 와 si 로 나눴습니다.
                         // else {
@@ -229,11 +229,10 @@ var ParkRegisterPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-park-register',template:/*ion-inline-start:"D:\dev\mobileProject\dev2\1204\src\pages\park-register\park-register.html"*/`<ion-header>\n    <ion-navbar>\n      <ion-title>\n        신규 주차장 등록\n      </ion-title>\n    </ion-navbar>\n  </ion-header>\n  <ion-content padding id="page1">\n    <form id="page1-form1">\n      <div id="page1-markdown6" class="show-list-numbers-and-dots">\n        <pre>\n          <code>\n            **유의사항**\n          </code>\n        </pre>\n        <p style="color:#000000;">\n          1.주차장 위치명은 &#39;국토정보공사&#39;를 기준으로 기입하시오\n        </p>\n        <p style="color:#000000;">\n          2.필요 Section에만 (최대) 차량 수를 기입 하시오\n        </p>\n        <p style="color:#000000;">\n          ex) A,B,C 섹션만 등록할 경우, D,E섹션은 공백으로 할 것\n        </p>\n      </div>\n  \n      <ion-item>\n        <ion-label>\n          지역선택\n        </ion-label>\n        <ion-select [(ngModel)]="doo" name="doo" type="text">\n          <!-- 값이름 : doo -->\n          <ion-option value="경기도">경기도</ion-option>\n          <ion-option value="강원도">강원도</ion-option>\n          <ion-option value="서울">서울</ion-option>\n          <ion-option value="전라도">전라도</ion-option>\n          <ion-option value="경상도">경상도</ion-option>\n          <ion-option value="충청도">충청도</ion-option>\n          <ion-option value="제주도">제주도</ion-option>\n       </ion-select>\n        <!-- 원래 바로위 select 와 연계되어서 작동해야하나, 아직 해결을 못하였다.\n        ex) 위 select 에서 \'경상도\'선택시, 아래 select 에서는 \'포항시\'만 나오게끔 해야함. -->\n        <ion-select [(ngModel)]="si" name="si" type="text">\n          <!--값이름 : si  -->\n          <ion-option value="광주광역시">광주시</ion-option>\n          <ion-option value="대전광역시">대전시</ion-option>\n          <ion-option value="강남구">강남구</ion-option>\n          <ion-option value="춘천시">춘천시</ion-option>\n          <ion-option value="용인시">용인시</ion-option>\n          <ion-option value="포항시">포항시</ion-option>\n        </ion-select>\n  \n      </ion-item>\n      <ion-item id="page1-input3">\n        <ion-label>\n          주차장 위치\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="place" name="place"></ion-input>\n      </ion-item>\n      <ion-item id="page1-input4">\n        <ion-label>\n          주차장 면적\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="wide" name="wide"></ion-input>\n      </ion-item>\n    </form>\n  \n  \n  \n    <div id="page1-markdown1" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        A Section\n      </p>\n    </div>\n    <form id="page1-form10">\n      <ion-item id="page1-input13">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="a" name="a"></ion-input>\n      </ion-item>\n    </form>\n    <div id="page1-markdown2" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        B Section\n      </p>\n    </div>\n    <form id="page1-form9">\n      <ion-item id="page1-input14">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="b" name="b"></ion-input>\n      </ion-item>\n    </form>\n    <div id="page1-markdown3" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        C Section\n      </p>\n    </div>\n    <form id="page1-form11">\n      <ion-item id="page1-input18">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="c" name="c"></ion-input>\n      </ion-item>\n    </form>\n    <div id="page1-markdown4" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        D Section\n      </p>\n    </div>\n    <form id="page1-form13">\n      <ion-item id="page1-input15">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="d" name="d"></ion-input>\n      </ion-item>\n    </form>\n    <form id="page1-form14">\n      <div id="page1-markdown5" class="show-list-numbers-and-dots">\n        <p style="color:#000000;">\n          E Section\n        </p>\n      </div>\n      <ion-item id="page1-input16">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="e" name="e"></ion-input>\n      </ion-item>\n      <button id="page1-button1" ion-button color="balanced" block (click)="return2enroll(doo,si,place,wide,a,b,c,d,e)">\n        등록\n      </button>\n  \n    </form>\n  </ion-content>`/*ion-inline-end:"D:\dev\mobileProject\dev2\1204\src\pages\park-register\park-register.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object])
     ], ParkRegisterPage);
     return ParkRegisterPage;
-    var ParkRegisterPage_1;
+    var ParkRegisterPage_1, _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=park-register.js.map
@@ -325,7 +324,7 @@ module.exports = webpackAsyncContext;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
@@ -391,7 +390,7 @@ var AuthProvider = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(62);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -523,10 +522,9 @@ var ParkAuthsPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-park-auths',template:/*ion-inline-start:"D:\dev\mobileProject\dev2\1204\src\pages\park-auths\park-auths.html"*/`<!--\n\n  Generated template for the ParkAuthsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar color = "primary">\n\n    <ion-title>park-auths</ion-title>\n\n    \n\n  </ion-navbar>\n\n\n\n  <ion-toolbar>\n\n    <ion-searchbar [(ngModel)]="searchQuery"\n\n        (ionInput)="getUsers($event)"\n\n        (ionClear)="resetList($event)">\n\n    </ion-searchbar>\n\n  </ion-toolbar>\n\n  \n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n<ion-list [virtualScroll] = "people" [headerFn]="customHeaderFn">\n\n  <ion-item-divider *virtualHeader="let header">\n\n      {{header}}\n\n    </ion-item-divider>\n\n\n\n<ion-item *virtualItem = "let person" (click) = "authSelect(person)" detail-push>\n\n\n\n    <h3>{{person.email}}</h3>\n\n\n\n  </ion-item>\n\n</ion-list>\n\n\n\n</ion-content>\n\n`/*ion-inline-end:"D:\dev\mobileProject\dev2\1204\src\pages\park-auths\park-auths.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]])
     ], ParkAuthsPage);
     return ParkAuthsPage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=park-auths.js.map
@@ -566,13 +564,13 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_event_event__ = __webpack_require__(323);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_profile_profile__ = __webpack_require__(324);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_camera__ = __webpack_require__(325);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_park_list_park_list__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_park_list_park_list__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angularfire2__ = __webpack_require__(326);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angularfire2_database__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angularfire2_database__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_dialogs__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_park_register_park_register__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_park_register_park_register__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_park_auths_park_auths__ = __webpack_require__(219);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -798,7 +796,7 @@ var HomePage = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -841,7 +839,7 @@ var EventProvider = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;

@@ -23,14 +23,31 @@ export class ParkDetailsPage {
   //parkDetailRef;toggle;
   //detail: Array<Object> = [];
   tog: FirebaseListObservable<any[]>;
-
+  auth: boolean;
+  checker: boolean;
+/*
   constructor(public navCtrl: NavController, public navParams: NavParams, public af:AngularFireDatabase, public dialogs: Dialogs) {
   
     this.check = navParams.data.parkData;
     this.key = navParams.data.parkData.key;
 //    this.parkDetailRef = firebase.database().ref('/parks/'+this.key);
     this.tog = af.list('/parks/'+this.key+'/detail/');
-  }
+ //   this.tog2 = firebase.database().ref(`/parks/${this.key}/detail/`);
+    this.ifAuth();
+    this.ifChecker();
+//    window.alert(this.auth);
+  }*/
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public af:AngularFireDatabase, public dialogs: Dialogs) {
+    
+      this.check = navParams.data.parkData;
+      this.key = navParams.data.parkData.key;
+  //    this.parkDetailRef = firebase.database().ref('/parks/'+this.key);
+      this.tog = af.list('/parks/'+this.key+'/detail/');
+      this.ifAuth();
+      this.ifChecker();
+
+    }
 
   ionViewDidLoad() {
     /*
@@ -46,7 +63,6 @@ export class ParkDetailsPage {
   }
   
   toggleButton(toggles:any){
-    
     //window.alert( toggles.toggle);
 
       firebase.database().ref('/parks/'+this.key+'/detail/'+toggles.id+'/')
@@ -77,7 +93,7 @@ export class ParkDetailsPage {
       }
       else
       {
-        window.alert('unauthorized access');
+   //     window.alert('unauthorized access');
       }
     })
 
@@ -86,8 +102,65 @@ export class ParkDetailsPage {
 
   ifAuth(){
     var user = firebase.auth().currentUser;
-    const valid = firebase.database().ref(`/parks/`+this.key+'/manager/');
-    
+    var key = this.key;
+    var valid = firebase.database().ref(`/parks/${key}/managers/`);
+    var check  = [];
+
+    valid.orderByChild('key')
+    .equalTo(user.uid)
+    .once('value',
+      function(snapshot)
+      {
+        if(snapshot.exists())
+        {
+          check.push(true);
+        }
+        else{
+          check.push(false);
+        }
+      });
+      
+      if(check[0])
+      {
+        this.auth = true;
+        return true;
+      }
+      else
+      {
+        this.auth = false;
+        return false;
+      }
+  }
+  ifChecker(){
+    var user = firebase.auth().currentUser;
+    var key = this.key;
+    var valid = firebase.database().ref(`/parks/${key}/checkers/`);
+    var check  = [];
+
+    valid.orderByChild('key')
+    .equalTo(user.uid)
+    .once('value',
+      function(snapshot)
+      {
+        if(snapshot.exists())
+        {
+          check.push(true);
+        }
+        else{
+          check.push(false);
+        }
+      });
+      
+      if(check[0])
+      {
+        this.checker = true;
+        return true;
+      }
+      else
+      {
+        this.checker = false;
+        return false;
+      }
   }
 
 

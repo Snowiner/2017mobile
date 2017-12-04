@@ -19,7 +19,7 @@ import { _appIdRandomProviderFactory } from '@angular/core/src/application_token
 export class ParkRegisterPage {
 
   parks: FirebaseListObservable<any[]>;
-   doo: string; //도 이름 (충청도,전라도 등)
+  doo: string; //도 이름 (충청도,전라도 등)
   si: string; //시 이름 ( 대구광역시 , 포항시 등)
   place: string; //주차장 장소 ( ex) 한동대학교 은혜관  )
   wide: string; //면적.
@@ -44,19 +44,19 @@ export class ParkRegisterPage {
 
   return2enroll(doo, si, place, wide, a, b, c, d, e) {
     for (var i = 0; i < a; i++) {//firebase에 반영하기 전에, 미리 섹션별로 배열을 만들어주는 작업을 한다.
-      this.a_arr[i] = { carnum: 'A' + i, toggle: true };
+      this.a_arr[i] = { carnum: 'A' + i, toggle: true,id:i };
     }
     for (var i = 0; i < b; i++) {
-      this.a_arr[+a + +i] = { carnum: 'B' + i, toggle: true };
+      this.a_arr[+a + +i] = { carnum: 'B' + i, toggle: true ,id:+a + +i};
     }
     for (var i = 0; i < c; i++) {
-      this.a_arr[+a + +b + +i] = { carnum: 'C' + i, toggle: true };
+      this.a_arr[+a + +b + +i] = { carnum: 'C' + i, toggle: true,id:+a + +b + +i };
     }
     for (var i = 0; i < d; i++) {
-      this.a_arr[+a + +b + +c + +i] = { carnum: 'D' + i, toggle: true };
+      this.a_arr[+a + +b + +c + +i] = { carnum: 'D' + i, toggle: true,id:+a + +b + +c + +i };
     }
     for (var i = 0; i < e; i++) {
-      this.a_arr[+a + +b + +c + +d + +i] = { carnum: 'E' + i, toggle: true };
+      this.a_arr[+a + +b + +c + +d + +i] = { carnum: 'E' + i, toggle: true,id:+a + +b + +c + +d + +i };
     }
 
 
@@ -94,8 +94,8 @@ export class ParkRegisterPage {
             );
 */
             var user = firebase.auth().currentUser;
-            this.managers.push({id:user.uid, email:user.email});
-            this.checkers.push({id:user.uid, email:user.email});
+            this.managers.push({key:user.uid, email:user.email});
+            this.checkers.push({key:user.uid, email:user.email});
             
             this.parks.push({ doo:doo, si:si, place: place, wide: wide, detail: this.a_arr, managers: this.managers, checkers: this.checkers});
             
