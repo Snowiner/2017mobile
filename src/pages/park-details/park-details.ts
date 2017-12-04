@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import { Dialogs } from '@ionic-native/dialogs';
 import * as firebase from 'firebase';
-import { ParkAuthsPage } from '../park-auths/park-auths';
 
 /**
  * Generated class for the ParkDetailsPage page.
@@ -20,52 +19,46 @@ import { ParkAuthsPage } from '../park-auths/park-auths';
 export class ParkDetailsPage {
   check: Object;
   key: any;
-  parkDetailRef;
-  detail: Array<Object> = [];
+  //parkDetailRef;toggle;
+  //detail: Array<Object> = [];
+  tog: FirebaseListObservable<any[]>;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public af:AngularFireDatabase, public dialogs: Dialogs) {
   
     this.check = navParams.data.parkData;
     this.key = navParams.data.parkData.key;
-    this.parkDetailRef = firebase.database().ref('/parks/'+this.key);
+//    this.parkDetailRef = firebase.database().ref('/parks/'+this.key);
+    this.tog = af.list('/parks/'+this.key+'/detail/');
   }
 
   ionViewDidLoad() {
+    /*
     this.parkDetailRef.child('detail').on('value', data=>{
       data.forEach(data => {
        this.detail.push({
           carnum: data.val().carnum,
-          toggle: data.val().toggle})      
+          toggle: data.val().toggle,
+          id: data.val().id})      
     }); 
    });
+   */
   }
+  
+  toggleButton(toggles:any){
+    
+    //window.alert( toggles.toggle);
 
-  manage(){
-    this.navCtrl.push(ParkAuthsPage,{id:this.key});
-  }
-
-  toggleButton(carnum: any, toggle: any){
-    /*
-    if(toggle === 'true'){
-      this.parkDetailRef.child('detail').update(this.detail, {toggle: 'false'});
-
-    }*/
-   /*
-    this.parkDetailRef.child('detail').on('value', data=>{
-        if(data.val().carnum.equalTo(carnum)){
-          if(toggle == 'false'){
-          data.update('',{carnum: carnum, toggle: 'true'});
-          }
-     
-          if(toggle == 'true'){
-            data.update('',{carnum: carnum, toggle: 'true'});
-            
-          }
-        }
-       });
-*/
-    /*
-    this.parkDetailRef.child('detail').on('value', data=>{
-      data.equalTo(carnum).update({carnum: carnum, toggle: 'true'});
-    }); */  
+      firebase.database().ref('/parks/'+this.key+'/detail/'+toggles.id+'/')
+      .update({carnum:toggles.carnum , toggle: !toggles.toggle});
+    //   this.toggle.on('value', data=>{
+  //     data.forEach(data => {
+  //      if(data.val().carnum == details.carnum){
+  //        this.toggle.update(details,{carnum:details.carnum , toggle:!details.toggle});
+  //      }
+       
+      
+  //   }); 
+  //  });
+  
   }
 }
