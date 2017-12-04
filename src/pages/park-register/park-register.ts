@@ -28,6 +28,11 @@ export class ParkRegisterPage {
   c: number;
   d: number;
   e: number;
+
+  managers : any[] = [];
+  stats : any[] = [];
+  checkers : any[] = [];
+
  detailRef;
  detail: Array<Object> = [];
   a_arr: Array<Object> = [];//a섹션 배열. 각각의 원소는 차량1대공간을 의미하며, carnum(자리이름)과 toggle(사용가능여부)를 가지고있음
@@ -89,9 +94,14 @@ export class ParkRegisterPage {
               doo:doo, si:si, place: place, wide: wide, detail: this.a_arr}
             );
 */
-            this.parks.push({ doo:doo, si:si, place: place, wide: wide, detail: this.a_arr });
+            var user = firebase.auth().currentUser;
+            this.managers.push({id:user.uid, email:user.email});
+            this.stats.push({id:user.uid,email:user.email});
+            this.checkers.push({id:user.uid, email:user.email});
             
-            //기존 location 을 그냥 doo 와 si 로 나눴습니다.
+            this.parks.push({ doo:doo, si:si, place: place, wide: wide, detail: this.a_arr, managers: this.managers, stats: this.stats, checkers: this.checkers});
+            
+             //기존 location 을 그냥 doo 와 si 로 나눴습니다.
             // else {
             //   let alert = this.alertCtrl.create({
             //     title: '지역 선택 오류',
