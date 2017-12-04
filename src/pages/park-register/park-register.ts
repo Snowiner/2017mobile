@@ -30,7 +30,6 @@ export class ParkRegisterPage {
   e: number;
 
   managers : any[] = [];
-  stats : any[] = [];
   checkers : any[] = [];
 
  detailRef;
@@ -96,10 +95,9 @@ export class ParkRegisterPage {
 */
             var user = firebase.auth().currentUser;
             this.managers.push({id:user.uid, email:user.email});
-            this.stats.push({id:user.uid,email:user.email});
             this.checkers.push({id:user.uid, email:user.email});
             
-            this.parks.push({ doo:doo, si:si, place: place, wide: wide, detail: this.a_arr, managers: this.managers, stats: this.stats, checkers: this.checkers});
+            this.parks.push({ doo:doo, si:si, place: place, wide: wide, detail: this.a_arr, managers: this.managers, checkers: this.checkers});
             
              //기존 location 을 그냥 doo 와 si 로 나눴습니다.
             // else {

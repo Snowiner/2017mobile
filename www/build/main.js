@@ -7,7 +7,7 @@ webpackJsonp([10],{
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ParkListPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__park_register_park_register__ = __webpack_require__(115);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -122,7 +122,7 @@ var ParkListPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__park_list_park_list__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -146,7 +146,6 @@ var ParkRegisterPage = (function () {
         this.af = af;
         this.alertCtrl = alertCtrl;
         this.managers = [];
-        this.stats = [];
         this.checkers = [];
         this.detail = [];
         this.a_arr = []; //a섹션 배열. 각각의 원소는 차량1대공간을 의미하며, carnum(자리이름)과 toggle(사용가능여부)를 가지고있음
@@ -203,9 +202,8 @@ var ParkRegisterPage = (function () {
               */
                         var user = __WEBPACK_IMPORTED_MODULE_4_firebase__["auth"]().currentUser;
                         _this.managers.push({ id: user.uid, email: user.email });
-                        _this.stats.push({ id: user.uid, email: user.email });
                         _this.checkers.push({ id: user.uid, email: user.email });
-                        _this.parks.push({ doo: doo, si: si, place: place, wide: wide, detail: _this.a_arr, managers: _this.managers, stats: _this.stats, checkers: _this.checkers });
+                        _this.parks.push({ doo: doo, si: si, place: place, wide: wide, detail: _this.a_arr, managers: _this.managers, checkers: _this.checkers });
                         //기존 location 을 그냥 doo 와 si 로 나눴습니다.
                         // else {
                         //   let alert = this.alertCtrl.create({
@@ -231,10 +229,11 @@ var ParkRegisterPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-park-register',template:/*ion-inline-start:"D:\dev\mobileProject\dev2\1204\src\pages\park-register\park-register.html"*/`<ion-header>\n    <ion-navbar>\n      <ion-title>\n        신규 주차장 등록\n      </ion-title>\n    </ion-navbar>\n  </ion-header>\n  <ion-content padding id="page1">\n    <form id="page1-form1">\n      <div id="page1-markdown6" class="show-list-numbers-and-dots">\n        <pre>\n          <code>\n            **유의사항**\n          </code>\n        </pre>\n        <p style="color:#000000;">\n          1.주차장 위치명은 &#39;국토정보공사&#39;를 기준으로 기입하시오\n        </p>\n        <p style="color:#000000;">\n          2.필요 Section에만 (최대) 차량 수를 기입 하시오\n        </p>\n        <p style="color:#000000;">\n          ex) A,B,C 섹션만 등록할 경우, D,E섹션은 공백으로 할 것\n        </p>\n      </div>\n  \n      <ion-item>\n        <ion-label>\n          지역선택\n        </ion-label>\n        <ion-select [(ngModel)]="doo" name="doo" type="text">\n          <!-- 값이름 : doo -->\n          <ion-option value="경기도">경기도</ion-option>\n          <ion-option value="강원도">강원도</ion-option>\n          <ion-option value="서울">서울</ion-option>\n          <ion-option value="전라도">전라도</ion-option>\n          <ion-option value="경상도">경상도</ion-option>\n          <ion-option value="충청도">충청도</ion-option>\n          <ion-option value="제주도">제주도</ion-option>\n       </ion-select>\n        <!-- 원래 바로위 select 와 연계되어서 작동해야하나, 아직 해결을 못하였다.\n        ex) 위 select 에서 \'경상도\'선택시, 아래 select 에서는 \'포항시\'만 나오게끔 해야함. -->\n        <ion-select [(ngModel)]="si" name="si" type="text">\n          <!--값이름 : si  -->\n          <ion-option value="광주광역시">광주시</ion-option>\n          <ion-option value="대전광역시">대전시</ion-option>\n          <ion-option value="강남구">강남구</ion-option>\n          <ion-option value="춘천시">춘천시</ion-option>\n          <ion-option value="용인시">용인시</ion-option>\n          <ion-option value="포항시">포항시</ion-option>\n        </ion-select>\n  \n      </ion-item>\n      <ion-item id="page1-input3">\n        <ion-label>\n          주차장 위치\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="place" name="place"></ion-input>\n      </ion-item>\n      <ion-item id="page1-input4">\n        <ion-label>\n          주차장 면적\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="wide" name="wide"></ion-input>\n      </ion-item>\n    </form>\n  \n  \n  \n    <div id="page1-markdown1" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        A Section\n      </p>\n    </div>\n    <form id="page1-form10">\n      <ion-item id="page1-input13">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="a" name="a"></ion-input>\n      </ion-item>\n    </form>\n    <div id="page1-markdown2" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        B Section\n      </p>\n    </div>\n    <form id="page1-form9">\n      <ion-item id="page1-input14">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="b" name="b"></ion-input>\n      </ion-item>\n    </form>\n    <div id="page1-markdown3" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        C Section\n      </p>\n    </div>\n    <form id="page1-form11">\n      <ion-item id="page1-input18">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="c" name="c"></ion-input>\n      </ion-item>\n    </form>\n    <div id="page1-markdown4" class="show-list-numbers-and-dots">\n      <p style="color:#000000;">\n        D Section\n      </p>\n    </div>\n    <form id="page1-form13">\n      <ion-item id="page1-input15">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="d" name="d"></ion-input>\n      </ion-item>\n    </form>\n    <form id="page1-form14">\n      <div id="page1-markdown5" class="show-list-numbers-and-dots">\n        <p style="color:#000000;">\n          E Section\n        </p>\n      </div>\n      <ion-item id="page1-input16">\n        <ion-label>\n          차량 수(대)\n        </ion-label>\n        <ion-input type="number" [(ngModel)]="e" name="e"></ion-input>\n      </ion-item>\n      <button id="page1-button1" ion-button color="balanced" block (click)="return2enroll(doo,si,place,wide,a,b,c,d,e)">\n        등록\n      </button>\n  \n    </form>\n  </ion-content>`/*ion-inline-end:"D:\dev\mobileProject\dev2\1204\src\pages\park-register\park-register.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
     ], ParkRegisterPage);
     return ParkRegisterPage;
-    var ParkRegisterPage_1, _a, _b, _c, _d;
+    var ParkRegisterPage_1;
 }());
 
 //# sourceMappingURL=park-register.js.map
@@ -328,7 +327,7 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -390,7 +389,7 @@ var AuthProvider = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ParkAuthsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -542,7 +541,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_profile_profile__ = __webpack_require__(324);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_camera__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_park_list_park_list__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_firebase__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angularfire2__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angularfire2_database__ = __webpack_require__(116);
@@ -688,7 +687,7 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(217);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;

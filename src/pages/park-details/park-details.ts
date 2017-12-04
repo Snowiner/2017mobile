@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import { Dialogs } from '@ionic-native/dialogs';
 import * as firebase from 'firebase';
+import { ParkAuthsPage } from '../park-auths/park-auths';
 
 /**
  * Generated class for the ParkDetailsPage page.
@@ -61,4 +62,9 @@ export class ParkDetailsPage {
   //  });
   
   }
+
+  manage(){
+    this.navCtrl.push(ParkAuthsPage,{id:this.key});
+  }
+
 }
