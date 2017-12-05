@@ -25,6 +25,10 @@ export class ParkDetailsPage {
   tog: FirebaseListObservable<any[]>;
   auth: boolean;
   checker: boolean;
+  parkDetailRef;toggle;
+  detail: Array<Object> = [];
+  analysis: FirebaseListObservable<any[]>;
+  parkName: string;
 /*
   constructor(public navCtrl: NavController, public navParams: NavParams, public af:AngularFireDatabase, public dialogs: Dialogs) {
   
@@ -40,17 +44,22 @@ export class ParkDetailsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public af:AngularFireDatabase, public dialogs: Dialogs) {
     
+      this.parkDetailRef = firebase.database().ref('/parks/'+this.key);
+    
       this.check = navParams.data.parkData;
       this.key = navParams.data.parkData.key;
   //    this.parkDetailRef = firebase.database().ref('/parks/'+this.key);
       this.tog = af.list('/parks/'+this.key+'/detail/');
       this.ifAuth();
       this.ifChecker();
+      this.analysis = af.list('/analysis');
+      this.parkDetailRef.child('place').on('value',data=>{
+        this.parkName = data.val();
+      })
 
     }
 
   ionViewDidLoad() {
-    /*
     this.parkDetailRef.child('detail').on('value', data=>{
       data.forEach(data => {
        this.detail.push({
@@ -59,7 +68,7 @@ export class ParkDetailsPage {
           id: data.val().id})      
     }); 
    });
-   */
+
   }
   
   toggleButton(toggles:any){
@@ -67,16 +76,11 @@ export class ParkDetailsPage {
 
       firebase.database().ref('/parks/'+this.key+'/detail/'+toggles.id+'/')
       .update({carnum:toggles.carnum , toggle: !toggles.toggle});
-    //   this.toggle.on('value', data=>{
-  //     data.forEach(data => {
-  //      if(data.val().carnum == details.carnum){
-  //        this.toggle.update(details,{carnum:details.carnum , toggle:!details.toggle});
-  //      }
-       
-      
-  //   }); 
-  //  });
-  
+    
+      var d = new Date();
+      var week = new Array('일', '월', '화', '수', '목', '금', '토');
+      this.analysis.push({ 장소: this.parkName, 요일: week[d.getDay()], 시간: d.getHours() });
+ 
   }
 
   manage(){
@@ -131,6 +135,11 @@ export class ParkDetailsPage {
         return false;
       }
   }
+
+
+
+
+
   ifChecker(){
     var user = firebase.auth().currentUser;
     var key = this.key;

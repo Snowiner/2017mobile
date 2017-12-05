@@ -1,0 +1,52 @@
+<!--
+  Generated template for the ParkAnalysisPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color ="primary">
+    <ion-title>주차장 통계</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list id="page1-list2">
+    <ion-item class="item-divider" id="page1-list-item-divider1"> 요일별 주차율 높은 장소</ion-item>
+    <label class="item item-select" id="page1-select1">
+      <span class="input-label">요일</span>
+      <select [(ngModel)]="day" name="day">
+        <option>월</option>
+        <option>화</option>
+        <option>수</option>
+        <option>목</option>
+        <option>금</option>
+        <option>토</option>
+        <option>일</option>
+      </select>
+    </label>
+  </ion-list>
+  <ion-buttons >
+    <button ion-button (click) = 
+    "day_anal(day)">검색 </button>
+  </ion-buttons>
+  <ion-list id="page1-list3">
+    <ion-item class="item-divider" id="page1-list-item-divider3"> 시간별 주차율 높은 장소</ion-item>
+    <label class="item item-select" id="page1-select3">
+      <span class="input-label">시간</span>
+      <select [(ngModel)]="time" name="time" >
+        <option>AM 0:00 ~ AM 6:00</option>
+        <option>AM 6:00 ~ PM 12:00</option>
+        <option>PM 12:00 ~ PM 6:00</option>
+        <option>PM 6:00 ~ AM 0:00</option>
+      </select>
+    </label>
+  </ion-list>
+  <ion-buttons >
+    <button ion-button (click) = 
+    "time_anal(time)">검색 </button>
+  </ion-buttons>
+</ion-content>

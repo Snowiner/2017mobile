@@ -2,9 +2,11 @@
   
     <ion-navbar color ="primary">
       <ion-title>Park HERE</ion-title>
-     <ion-buttons end *ngIf="check[0]">
-          <button ion-button icon-left (click) = 
+     <ion-buttons end >
+          <button *ngIf="check[0]" ion-button icon-left (click) = 
           "addPark()">주차장추가 </button>
+          <button ion-button icon-right (click) = 
+          "analysis()">주차장통계 </button>
         </ion-buttons>
    
     </ion-navbar>

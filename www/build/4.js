@@ -1,14 +1,14 @@
 webpackJsonp([4],{
 
-/***/ 332:
+/***/ 334:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ParkDetailsPageModule", function() { return ParkDetailsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__park_details__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__park_details__ = __webpack_require__(344);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,18 +38,18 @@ var ParkDetailsPageModule = (function () {
 
 /***/ }),
 
-/***/ 342:
+/***/ 344:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ParkDetailsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_dialogs__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_dialogs__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__park_auths_park_auths__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__park_auths_park_auths__ = __webpack_require__(220);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -85,40 +85,43 @@ var ParkDetailsPage = (function () {
     //    window.alert(this.auth);
       }*/
     function ParkDetailsPage(navCtrl, navParams, af, dialogs) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.af = af;
         this.dialogs = dialogs;
+        this.detail = [];
+        this.parkDetailRef = __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('/parks/' + this.key);
         this.check = navParams.data.parkData;
         this.key = navParams.data.parkData.key;
         //    this.parkDetailRef = firebase.database().ref('/parks/'+this.key);
         this.tog = af.list('/parks/' + this.key + '/detail/');
         this.ifAuth();
         this.ifChecker();
+        this.analysis = af.list('/analysis');
+        this.parkDetailRef.child('place').on('value', function (data) {
+            _this.parkName = data.val();
+        });
     }
     ParkDetailsPage.prototype.ionViewDidLoad = function () {
-        /*
-        this.parkDetailRef.child('detail').on('value', data=>{
-          data.forEach(data => {
-           this.detail.push({
-              carnum: data.val().carnum,
-              toggle: data.val().toggle,
-              id: data.val().id})
+        var _this = this;
+        this.parkDetailRef.child('detail').on('value', function (data) {
+            data.forEach(function (data) {
+                _this.detail.push({
+                    carnum: data.val().carnum,
+                    toggle: data.val().toggle,
+                    id: data.val().id
+                });
+            });
         });
-       });
-       */
     };
     ParkDetailsPage.prototype.toggleButton = function (toggles) {
         //window.alert( toggles.toggle);
         __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('/parks/' + this.key + '/detail/' + toggles.id + '/')
             .update({ carnum: toggles.carnum, toggle: !toggles.toggle });
-        //   this.toggle.on('value', data=>{
-        //     data.forEach(data => {
-        //      if(data.val().carnum == details.carnum){
-        //        this.toggle.update(details,{carnum:details.carnum , toggle:!details.toggle});
-        //      }
-        //   }); 
-        //  });
+        var d = new Date();
+        var week = new Array('일', '월', '화', '수', '목', '금', '토');
+        this.analysis.push({ 장소: this.parkName, 요일: week[d.getDay()], 시간: d.getHours() });
     };
     ParkDetailsPage.prototype.manage = function () {
         var user = __WEBPACK_IMPORTED_MODULE_4_firebase__["auth"]().currentUser;

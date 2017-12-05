@@ -17,6 +17,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Dialogs } from '@ionic-native/dialogs';
 import { ParkRegisterPage } from '../pages/park-register/park-register';
 import { ParkAuthsPage } from '../pages/park-auths/park-auths';
+import { ParkAnalysisPage } from '../pages/park-analysis/park-analysis';
 
 
 export const firebaseConfig =
@@ -47,7 +48,7 @@ export const firebaseConfig2 =
 //   messagingSenderId: "649356034318"
 //   });
 
-firebase.initializeApp(firebaseConfig2);
+firebase.initializeApp(firebaseConfig);
 
 class CameraMock extends Camera {
   getPicture(options){
@@ -68,7 +69,8 @@ class CameraMock extends Camera {
     HomePage,
     ParkListPage,
     ParkRegisterPage,
-    ParkAuthsPage
+    ParkAuthsPage,
+    ParkAnalysisPage 
   ],
   imports: [
     BrowserModule,
@@ -83,7 +85,8 @@ class CameraMock extends Camera {
     HomePage,
     ParkListPage,
     ParkRegisterPage,
-    ParkAuthsPage
+    ParkAuthsPage,
+    ParkAnalysisPage 
   ],
   providers: [
     StatusBar,

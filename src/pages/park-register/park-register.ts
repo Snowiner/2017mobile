@@ -19,6 +19,8 @@ import { _appIdRandomProviderFactory } from '@angular/core/src/application_token
 export class ParkRegisterPage {
 
   parks: FirebaseListObservable<any[]>;
+  toggle : FirebaseListObservable<any[]>;
+
   doo: string; //도 이름 (충청도,전라도 등)
   si: string; //시 이름 ( 대구광역시 , 포항시 등)
   place: string; //주차장 장소 ( ex) 한동대학교 은혜관  )
@@ -39,7 +41,8 @@ export class ParkRegisterPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFireDatabase,
     private alertCtrl: AlertController) {
      this.parks = af.list('/parks'); //constructor 인자에 alertcontroller 추가시켜줘야함
-  }
+     this.toggle = af.list('/toggle');
+    }
 
 
   return2enroll(doo, si, place, wide, a, b, c, d, e) {

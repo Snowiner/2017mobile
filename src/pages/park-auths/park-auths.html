@@ -24,10 +24,8 @@
 
 <ion-content padding>
 
-<ion-list [virtualScroll] = "people" [headerFn]="customHeaderFn">
-  <ion-item-divider *virtualHeader="let header">
-      {{header}}
-    </ion-item-divider>
+<ion-list [virtualScroll] = "people">
+
 
 <ion-item *virtualItem = "let person" (click) = "authSelect(person)" detail-push>
 

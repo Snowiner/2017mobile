@@ -5,6 +5,8 @@ import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/databas
 import { Park } from './park';
 import { Dialogs } from '@ionic-native/dialogs';
 import { ParkRegisterPage } from '../park-register/park-register';
+import { ParkAnalysisPage } from '../park-analysis/park-analysis';
+
 /*
   Generated class for the ParkList page.
 
@@ -24,23 +26,17 @@ export class ParkListPage {
   ifMaster: boolean;
   check: any[] = [];
   constructor(public navCtrl: NavController) {
-    /*
-    parkData.getParks().then(theResult => {
-      this.parks = theResult;
-    })
-    */
-
-
 
   this.ifAuth();
   this.doRef = firebase.database().ref('/parks');
    
-
-   // this.parks =af.list('/parks');
    }
 
   addPark(){ //ParkRegisterPage로 넘어가는 함수.
-    this.navCtrl.setRoot(ParkRegisterPage);
+    this.navCtrl.push(ParkRegisterPage);
+  }
+  analysis(){ //통계페이지로 넘어가는 함수////////
+    this.navCtrl.push(ParkAnalysisPage);
   }
 
   goParkDetails(theParkData){
@@ -119,22 +115,11 @@ export class ParkListPage {
           else{
             check.push(false);
           }
-          window.alert('1');
         });
         this.check = check;
         }
 
-        sample2(){
-          if(this.check)
-          {
-            this.sample(this.check);
-            return true;
-          }
-          else{
-            this.sample(this.check);
-            return false;
-          }
-        }
+       /*
 
         sample(check)
         {
@@ -150,7 +135,7 @@ export class ParkListPage {
             return false;
           }
         }
-      
+      */
     }
 
     
